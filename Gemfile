@@ -19,6 +19,7 @@ gem "rails_config", "0.4.2"
 gem "slim-rails"
 gem "omniauth"
 gem "omniauth-facebook"
+gem "puma"
 
 group :development, :test do
   gem "web-console", "~> 2.0"

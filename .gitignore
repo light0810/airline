@@ -8,6 +8,10 @@
 
 /test
 /spec
+/public/assets
+/public/uploads
+/config/puma.rb
+/shared
 
 config/settings.local.yml
 config/settings/*.local.yml
