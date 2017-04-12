@@ -1,0 +1,75 @@
+h3.text-danger Thông tin chuyến bay
+h4
+  strong Mã chuyến bay: 
+  = @flight.code
+h4
+  strong Thời gian đi: 
+  = @flight.start_time
+  | &nbsp; &nbsp; &nbsp; &nbsp;
+  strong Thời gian đến: 
+  = @flight.end_time
+h4
+  strong Địa điểm đi: 
+  = @flight.start_place.city
+  | , 
+  = @flight.start_place.country
+  | &nbsp; &nbsp; &nbsp; &nbsp;
+  strong Địa điểm đến: 
+  = @flight.end_place.city
+  | , 
+  = @flight.end_place.country
+hr
+- if @flight.confirm?
+  h3 Vé hạng 1
+  .row
+    - @type1_tickets.each do |type1_ticket|
+      .col-xs-1
+        = type1_ticket.location
+        - if type1_ticket.block?
+          button.btn.btn-danger.btn-block Đã khóa
+        - elsif type1_ticket.sale?
+          = link_to "Đặt vé", buy_tickets_path(ticket_id: type1_ticket.id), method: :post, class: "btn btn-primary btn-block"
+        - elsif type1_ticket.own?
+          button.btn.btn-success.btn-block Đã đặt
+  h3 Vé hạng 2
+  .row
+    - @type2_tickets.each do |type2_ticket|
+      .col-xs-1
+        = type2_ticket.location
+        - if type2_ticket.block?
+          button.btn.btn-danger.btn-block Đã khóa
+        - elsif type2_ticket.sale?
+          = link_to "Đặt vé", buy_tickets_path(ticket_id: type2_ticket.id), method: :post, class: "btn btn-primary btn-block"
+        - elsif type2_ticket.own?
+          button.btn.btn-success.btn-block Đã đặt
+  h3 Vé hạng 3
+  .row
+    - @type3_tickets.each do |type3_ticket|
+      .col-xs-1
+        = type3_ticket.location
+        - if type3_ticket.block?
+          button.btn.btn-danger.btn-block Đã khóa
+        - elsif type3_ticket.sale?
+          = link_to "Đặt vé", buy_tickets_path(ticket_id: type3_ticket.id), method: :post, class: "btn btn-primary btn-block"
+        - elsif type3_ticket.own?
+          button.btn.btn-success.btn-block Đã đặt
+
+  - unless @other_tickets.count == 0
+    h3 Vé hạng khác
+    .row
+      - @other_tickets.each do |other_ticket|
+        .col-xs-1
+          = other_ticket.location
+          - if other_ticket.block?
+            button.btn.btn-danger.btn-block Đã khóa
+          - elsif other_ticket.sale?
+            = link_to "Đặt vé", buy_tickets_path(ticket_id: other_ticket.id), method: :post, class: "btn btn-primary btn-block"
+          - elsif other_ticket.own?
+            button.btn.btn-success.btn-block Đã đặt
+
+- elsif @flight.arrive?
+  h3 Chuyến bay đã khởi hành
+- elsif @flight.delay?
+  h3 Chuyến bay bị hoãn
+- elsif @flight.not_confirm?
+  h3 Vé chưa được phát hành

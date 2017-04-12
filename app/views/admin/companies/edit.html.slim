@@ -1,0 +1,15 @@
+#form-box
+  h2 = t "admin.company.edit_company"
+  hr
+  = form_for [:admin, @company] do |f|
+    = render "shared/error_message", object: f.object
+    .form-group.row
+      .col-xs-6
+        = f.label :name
+      .col-xs-6
+        = f.text_field :name, class: "form-control"
+    
+    .form-group.row
+      .col-xs-4
+      .col-xs-4
+        = f.submit t("button.edit"), class: "btn btn-primary btn-block"

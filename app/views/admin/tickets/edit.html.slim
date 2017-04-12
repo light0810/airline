@@ -1,0 +1,44 @@
+- provide :title, t("admin.ticket.edit_ticket")
+
+#form-box
+  h2 = t "admin.ticket.edit_ticket"
+
+  = form_for [:admin, @ticket] do |f|
+    = render "shared/error_message", object: f.object
+    .form-group
+      = f.label :location
+      = f.text_field :location, class: "form-control"
+
+    .form-group
+      = f.label :level
+      .row
+        .col-xs-3
+          = f.radio_button :level, "other"
+          span Hạng khác
+        .col-xs-3
+          = f.radio_button :level, "type1"
+          span Hạng 1
+        .col-xs-3
+          = f.radio_button :level, "type2"
+          span Hạng 2
+        .col-xs-3
+          = f.radio_button :level, "type3"
+          span Hạng 3
+
+    .form-group
+      = f.label :status
+      .row
+        .col-xs-3
+          = f.radio_button :status, "block"
+          span Đã khóa
+        .col-xs-3
+          = f.radio_button :status, "sale"
+          span Chưa sở hữu
+        .col-xs-3
+          = f.radio_button :status, "own"
+          span Đã sở hữu  
+    
+    .form-group.row
+      .col-xs-4
+      .col-xs-4
+        = f.submit t("admin.ticket.edit_ticket"), class: "btn btn-primary btn-block"

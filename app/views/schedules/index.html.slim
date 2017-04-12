@@ -1,0 +1,64 @@
+.row
+  .col-xs-4
+    = search_form_for @search do |f|
+      table.table.table-bordered
+        tr
+          td.col-md-1.text-center = f.label :start_place_city_or_start_place_country_cont, t("user.flight.start_place")
+          td.col-md-1 = f.text_field :start_place_city_or_start_place_country_cont, class: "form-control"
+        tr
+          td.col-md-1.text-center = f.label :end_place_city_or_end_place_country_cont, t("user.flight.end_place")
+          td.col-md-1 = f.text_field :end_place_city_or_end_place_country_cont, class: "form-control"
+        tr
+          td.col-md-1.text-center = f.label :code_cont, t("user.flight.code")
+          td.col-md-1 = f.text_field :code_cont, class: "form-control"
+        tr
+          td.col-md-1.text-center = f.label :start_time_eq, t("user.flight.start_time")
+          td.col-md-1 = f.date_field :start_time_eq, class: "form-control"
+        tr
+          td.col-md-1.text-center = f.label :end_time_eq, t("user.flight.end_time")
+          td.col-md-1 = f.date_field :end_time_eq, class: "form-control"
+        
+      p = f.submit 'Tìm kiếm', class: "btn btn-default"
+  .col-xs-8
+    - if @flights.count == 0
+      h5.text-danger Không tìm thấy chuyến bay nào
+    - else
+      table.table.table-bordered.text-center
+        tr
+          th.info.text-center.col-xs-1 = sort_link @search, :code, t("user.flight.code")
+          th.info.text-center.col-xs-1 = sort_link @search, :plane_code, t("user.flight.plane")
+          th.info.text-center.col-xs-1 = sort_link @search, :start_time, t("user.flight.start_time")
+          th.info.text-center.col-xs-1 = sort_link @search, :end_time, t("user.flight.end_time")
+          th.info.text-center.col-xs-1 = sort_link @search, :start_place_city, t("user.flight.start_place")
+          th.info.text-center.col-xs-1 = sort_link @search, :end_place_city, t("user.flight.end_place")
+          th.info.text-center.col-xs-1 
+
+        - @flights.each do |flight|
+          tr
+            td = link_to flight.code, flight
+            td = flight.plane.code
+            td
+              - unless flight.start_time.nil?
+                = flight.start_time.strftime("%d/%m/%y")
+            td
+              - unless flight.end_time.nil?
+                = flight.end_time.strftime("%d/%m/%y")
+            td
+              = flight.start_place.city
+              | , 
+              = flight.start_place.country
+            td 
+              = flight.end_place.city
+              | , 
+              = flight.end_place.country
+            td
+              - if flight.not_confirm?
+                .text-danger Chưa bán
+              - elsif flight.confirm?
+                = link_to "Đặt vé", flight
+              - elsif flight.arrive?
+                .text-success Khởi hành
+              - elsif flight.delay?
+                .text-danger Trì hoãn
+
+      = paginate @flights

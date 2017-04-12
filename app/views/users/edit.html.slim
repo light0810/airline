@@ -1,0 +1,57 @@
+- provide :title, t("user.user.edit_user")
+
+#form-box
+  h2 = t "user.user.edit_user"
+  hr
+  = form_for @user do |f|
+    = render "shared/error_message", object: f.object
+    .form-group.row
+      .col-xs-6
+        = f.label :name
+      .col-xs-6
+        = f.text_field :name, class: "form-control"
+
+    .form-group.row
+      .col-xs-6
+        = f.label :address
+      .col-xs-6
+        = f.text_field :address, class: "form-control"
+
+    .form-group.row
+      .col-xs-6
+        = f.label :passport
+      .col-xs-6
+        = f.text_field :passport, class: "form-control"
+
+    .form-group.row
+      .col-xs-6
+        = f.label :credit_card
+      .col-xs-6
+        = f.text_field :credit_card, class: "form-control"
+
+    .form-group.row
+      .col-xs-6
+        = f.label :birthday
+      .col-xs-6
+        = f.date_field :birthday, class: "form-control"
+
+    .form-group.row
+      .col-xs-6
+        = f.label :gender
+      .col-xs-3
+        = f.radio_button :gender, "male"
+        span 
+          | &nbsp;&nbsp;Nam
+      .col-xs-3
+        = f.radio_button :gender, "female"
+        span 
+          | &nbsp;&nbsp;Nữ
+
+    .form-group.row
+      .col-xs-6
+        = f.label :image
+      .col-xs-6
+        = f.file_field :image
+    .form-group.row
+      .col-xs-4.col-xs-offset-4
+        = f.submit t("user.user.edit_user"), class: "btn btn-primary btn-block"

@@ -1,0 +1,51 @@
+#form-box
+  h2 = t "admin.flight.edit_flight"
+  hr
+  = form_for [:admin, @flight] do |f|
+    = render "shared/error_message", object: f.object
+    .form-group.row
+      .col-xs-6
+        = f.label :code
+      .col-xs-6
+        = f.text_field :code, class: "form-control"
+
+    .form-group.row
+      .col-xs-6
+        = f.label :start_time
+      .col-xs-6
+        = f.date_field :start_time, class: "form-control"
+
+    .form-group.row
+      .col-xs-6
+        = f.label :end_time
+      .col-xs-6
+        = f.date_field :end_time, class: "form-control"
+
+    .form-group.row
+      .col-xs-6
+        = f.label :plane_id
+      .col-xs-6
+        = f.collection_select :plane_id, @planes, :id, :code
+    
+    .form-group.row
+      .col-xs-6
+        = f.label :start_place_id
+      .col-xs-6
+        = f.collection_select :start_place_id, @places, :id, :city
+
+    .form-group.row
+      .col-xs-6
+        = f.label :end_place_id
+      .col-xs-6
+        = f.collection_select :end_place_id, @places, :id, :city
+
+    .form-group.row
+      .col-xs-6
+        = f.label :cooldown_date, "Chu kì (ngày)"
+      .col-xs-6
+        = f.number_field :cooldown_date, class: "form-control"
+
+    .form-group.row
+      .col-xs-4
+      .col-xs-4
+        = f.submit t("button.edit"), class: "btn btn-primary btn-block"

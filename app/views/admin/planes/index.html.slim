@@ -1,0 +1,31 @@
+h2 = t "admin.plane.index_plane"
+
+table.table.table-bordered.text-center
+  tr
+    th.info.text-center = sort_link @search, :name, t("admin.plane.name")
+    th.info.text-center = sort_link @search, :code, t("admin.plane.code")
+    th.info.text-center = sort_link @search, :company_name, t("admin.plane.company")
+    th.info.text-center = sort_link @search, :status, t("admin.plane.status")
+    th.info.text-center = t "admin.plane.select"
+
+  - @planes.each do |plane|
+    tr
+      td = plane.name
+      td = plane.code
+      td = plane.company.name
+      td
+        - if plane.not_ready?
+          = link_to "Chưa sẵn sàng", admin_manage_plane_path(id: plane.id, status: "ready"), method: :patch, data: {confirm: "Phê duyệt máy bay này?"}, class: "btn btn-danger btn-xs"
+        - elsif plane.ready?
+          = link_to "Sẵn sàng", admin_manage_plane_path(id: plane.id, status: "not_ready"), method: :patch, data: {confirm: "Hoãn máy bay này?"}, class: "btn btn-success btn-xs"
+      td
+        = link_to t("button.show"), [:admin, plane] , class: "btn btn-primary btn-xs"
+        | &nbsp;&nbsp;
+        = link_to t("button.edit"), edit_admin_plane_path(plane) , class: "btn btn-primary btn-xs"
+        | &nbsp;&nbsp;
+        = link_to t("button.delete"), [:admin, plane], method: :delete,
+          data: {confirm: t("button.you_sure")}, class: "btn btn-primary btn-xs"
+
+h4 = link_to t("admin.plane.new_plane"), new_admin_plane_path
+
+= paginate @planes

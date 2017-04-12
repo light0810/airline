@@ -1,0 +1,27 @@
+h3.text-danger Thông tin chuyến bay
+h4
+  strong Mã chuyến bay: 
+  = @flight.code
+h4
+  strong Thời gian đi: 
+  = @flight.start_time
+  | &nbsp; &nbsp; &nbsp; &nbsp;
+  strong Thời gian đến: 
+  = @flight.end_time
+h4
+  strong Địa điểm đi: 
+  = @flight.start_place.city
+  | , 
+  = @flight.start_place.country
+  | &nbsp; &nbsp; &nbsp; &nbsp;
+  strong Địa điểm đến: 
+  = @flight.end_place.city
+  | , 
+  = @flight.end_place.country
+hr
+- if @flight.confirm?
+  = link_to "Đặt theo vị trí vé", buy_tickets_path(flight_id: @flight.id)
+  | &nbsp;&nbsp;&nbsp;&nbsp;
+  = link_to "Đặt nhiều vé", buy_many_tickets_path(flight_id: @flight.id)
+-else
+  | Chưa đặt được vé

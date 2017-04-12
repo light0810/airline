@@ -1,0 +1,23 @@
+h2 = t "admin.place.index_place"
+
+table.table.table-bordered.text-center
+  tr
+    th.info.text-center = sort_link @search, :city, t("admin.place.city")
+    th.info.text-center = sort_link @search, :country, t("admin.place.country")
+    th.info.text-center = t "admin.place.select"
+
+  - @places.each do |place|
+    tr
+      td = place.city
+      td = place.country
+      td
+        = link_to t("button.show"), [:admin, place] , class: "btn btn-primary btn-xs"
+        | &nbsp;&nbsp;
+        = link_to t("button.edit"), edit_admin_place_path(place) , class: "btn btn-primary btn-xs"
+        | &nbsp;&nbsp;
+        = link_to t("button.delete"), [:admin, place], method: :delete,
+          data: {confirm: t("button.you_sure")}, class: "btn btn-primary btn-xs"
+
+h4 = link_to t("admin.place.new_place"), new_admin_place_path
+
+= paginate @places

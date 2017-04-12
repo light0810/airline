@@ -1,0 +1,21 @@
+h2 = t "admin.company.index_company"
+
+table.table.table-bordered.text-center
+  tr
+    td.info = t "admin.company.name"
+    td.info = t "admin.company.select"
+
+  - @companies.each do |company|
+    tr
+      td = company.name
+      td
+        = link_to t("button.show"), [:admin, company] , class: "btn btn-primary btn-xs"
+        | &nbsp;&nbsp;
+        = link_to t("button.edit"), edit_admin_company_path(company) , class: "btn btn-primary btn-xs"
+        | &nbsp;&nbsp;
+        = link_to t("button.delete"), [:admin, company], method: :delete,
+          data: {confirm: t("button.you_sure")}, class: "btn btn-primary btn-xs"
+
+h4 = link_to t("admin.company.new_company"), new_admin_company_path
+
+= paginate @companies

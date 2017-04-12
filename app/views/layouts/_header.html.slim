@@ -1,0 +1,22 @@
+nav.navbar.navbar-default.navbar-fixed-top#header
+  .container-fluid
+    #navbar.navbar-collapse.collapse
+      ul.nav.navbar-nav.navbar-left
+        li = link_to t("header.schedule"), schedules_path
+        li = link_to t("header.buy_ticket"), flights_path
+        - if user_signed_in?
+          li = link_to t("header.paycart"), carts_path
+          li = link_to t("header.own_ticket"), tickets_path
+      ul.nav.navbar-nav.navbar-right
+        - if user_signed_in?
+          li.dropdown
+            p href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="margin-top:7px;"
+              span = image_tag(current_user.image, height: "40px", width: "40px", class: "img-circle")
+            ul.dropdown-menu
+              li = link_to t("header.profile"), current_user
+              li = link_to t("header.edit_profile"), edit_user_path(current_user)
+              li = link_to t("header.edit_password"), edit_user_registration_path
+              li.divider role="separator"
+              li = link_to t("header.logout"), destroy_user_session_path, method: :delete
+        - else
+          li = link_to t("header.login"), new_user_session_path

@@ -1,0 +1,16 @@
+user:
+  avatar:
+    is_presence: true
+    is_allow_blank: true
+    max_size_in_MB: 2
+    unit: MB
+    accepted_format: image/jpeg,image/gif,image/png
+    store_dir: "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    extension_white_list:
+      - jpg
+      - jpeg
+      - gif
+      - png
+    profile_avatar_size: "150x150"
+    list_user_avatar_size: "50x50"
+    image_size_edit: 200

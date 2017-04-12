@@ -1,0 +1,27 @@
+#form-box
+  h2 = t "admin.plane.new_plane"
+  hr
+  = form_for [:admin, @plane] do |f|
+    = render "shared/error_message", object: f.object
+    .form-group.row
+      .col-xs-6
+        = f.label :name
+      .col-xs-6
+        = f.text_field :name, class: "form-control"
+
+    .form-group.row
+      .col-xs-6
+        = f.label :code
+      .col-xs-6
+        = f.text_field :code, class: "form-control"
+    
+    .form-group.row
+      .col-xs-6
+        = f.label :company_id, "Tên hãng hàng không"
+      .col-xs-6
+        = f.collection_select :company_id, @companies, :id, :name, {class: "form-control"}
+
+    .form-group.row
+      .col-xs-4
+      .col-xs-4
+        = f.submit t("button.create"), class: "btn btn-primary btn-block"

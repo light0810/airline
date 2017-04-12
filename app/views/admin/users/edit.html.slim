@@ -1,0 +1,64 @@
+- provide :title, t("admin.user.edit_user")
+
+#form-box
+  h2 = t "admin.user.edit_user"
+
+  = form_for [:admin, @user] do |f|
+    = render "shared/error_message", object: f.object
+    .form-group.row
+      .col-xs-6
+        = f.label :name
+      .col-xs-6
+        = f.text_field :name, class: "form-control"
+
+    .form-group.row
+      .col-xs-6
+        = f.label :address
+      .col-xs-6
+        = f.text_field :address, class: "form-control"
+
+    .form-group.row
+      .col-xs-6
+        = f.label :passport
+      .col-xs-6
+        = f.text_field :passport, class: "form-control"
+
+    .form-group.row
+      .col-xs-6
+        = f.label :credit_card
+      .col-xs-6
+        = f.text_field :credit_card, class: "form-control"
+
+    .form-group.row
+      .col-xs-6
+        = f.label :birthday
+      .col-xs-6
+        = f.date_field :birthday, class: "form-control"
+
+    .form-group.row
+      .col-xs-6
+        = f.label :gender
+      .col-xs-3
+        = f.radio_button :gender, "male"
+        span  Nam
+      .col-xs-3
+        = f.radio_button :gender, "female"
+        span  Nữ    
+
+    .form-group
+      = f.label :badge
+      .row
+        .col-xs-3
+          = f.radio_button :badge, "general"
+          span  Hạng phổ thông
+        .col-xs-3
+          = f.radio_button :badge, "special"
+          span  Hạng đặc biệt
+        .col-xs-4
+          = f.radio_button :badge, "business"
+          span Hạng doanh nhân 
+    
+    .form-group.row
+      .col-xs-4
+      .col-xs-4
+        = f.submit t("admin.user.edit_user"), class: "btn btn-primary btn-block"

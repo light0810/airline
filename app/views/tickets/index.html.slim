@@ -1,0 +1,34 @@
+.row
+  .col-xs-2#info_user
+    = image_tag(current_user.image, height: "120px", width: "120px", class: "img-circle")
+    h5.text-info
+      - if current_user.general?
+        | Hạng phổ thông
+      - elsif current_user.special?
+        | Hạng đặc biệt
+      - elsif current_user.business?
+        | Hạng doanh nhân
+    h2 = current_user.name
+  .col-xs-10#paycart
+    - if @tickets.count == 0
+      h3.text-danger Chưa có vé nào
+    - else
+      h3.text-info style="padding-left:10px;" Vé đang sở hữu
+      - @tickets.each do |ticket|
+        #paycart_item
+          h4.text-success 
+            strong Mã số vé: 
+            = ticket.id
+          p
+            strong Mã chuyến bay: 
+            = ticket.flight.code
+          p
+            strong Mã máy bay: 
+            = ticket.plane.code
+          p
+            strong Vị trí vé: 
+            = ticket.location
+          p
+            strong Giá vé: 
+            = ticket.price
+          h5 style="text-align:right;" = link_to "Đổi vé", swap_tickets_path(ticket_id: ticket.id)

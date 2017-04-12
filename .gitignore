@@ -1,0 +1,14 @@
+/.bundle
+
+/db/*.sqlite3
+/db/*.sqlite3-journal
+
+/log
+/tmp
+
+/test
+/spec
+
+config/settings.local.yml
+config/settings/*.local.yml
+config/environments/*.local.yml

@@ -1,0 +1,51 @@
+h2 = t "admin.user.index_user"
+
+table.table.table-bordered.text-center
+  tr
+    th.info.text-center = sort_link @search, :name, t("admin.user.name")
+    th.info.text-center = sort_link @search, :email, t("admin.user.email")
+    th.info.text-center = sort_link @search, :passport, t("admin.user.passport")
+    th.info.text-center = sort_link @search, :credit_card, t("admin.user.credit_card")
+    th.info.text-center = sort_link @search, :gender, t("admin.user.gender")
+    th.info.text-center = sort_link @search, :birthday, t("admin.user.birthday")
+    th.info.text-center = sort_link @search, :badge, t("admin.user.badge")
+    th.info.text-center = sort_link @search, :sign_in_count, t("admin.user.sign_in_count")
+    th.info.text-center = sort_link @search, :last_sign_in_at, t("admin.user.last_sign_in_at")
+    th.info.text-center = t "admin.user.select"
+
+  - @users.each do |user|
+    tr
+      td = user.name
+      td = user.email
+      td = user.passport
+      td = user.credit_card
+      td
+        - if user.male?
+          | Nam
+        - elsif user.female?
+          | Nữ
+      td
+        - unless user.birthday.nil?
+          = user.birthday.strftime("%d-%m-%Y")
+      td
+        - if user.general?
+          | Hạng phổ thông
+        - elsif user.special?
+          | Hạng đặc biệt
+        - elsif user.business?
+          | Hạng doanh nhân
+      td = user.sign_in_count
+      td 
+        - unless user.last_sign_in_at.nil?
+          = user.last_sign_in_at.strftime("%H:%M:%S %d/%m/%y")
+        - else 
+          = user.created_at.strftime("%H:%M:%S %d/%m/%y")
+      td
+        = link_to t("button.show"), [:admin, user] , class: "btn btn-primary btn-xs"
+        | &nbsp;&nbsp;
+        = link_to t("button.edit"), edit_admin_user_path(user) , class: "btn btn-primary btn-xs"
+        | &nbsp;&nbsp;
+        = link_to t("button.delete"), [:admin, user], method: :delete,
+          data: {confirm: t("button.you_sure")}, class: "btn btn-primary btn-xs"
+
+= paginate @users

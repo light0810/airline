@@ -1,0 +1,30 @@
+source "https://rubygems.org"
+
+gem "rails", "4.2.3"
+gem "sass-rails", "~> 5.0"
+gem "uglifier", ">= 1.3.0"
+gem "bootstrap-sass", "3.2.0.0"
+gem "bootstrap-will_paginate", "0.0.10"
+gem "jquery-rails"
+gem "turbolinks"
+gem "sdoc", "~> 0.4.0", group: :doc
+gem "carrierwave", "0.10.0"
+gem "mini_magick", "3.8.0"
+gem "devise"
+gem "cancancan"
+gem "ransack"
+gem "kaminari"
+gem "mysql2", "~> 0.3.20"
+gem "rails_config", "0.4.2"
+gem "slim-rails"
+gem "omniauth"
+gem "omniauth-facebook"
+
+group :development, :test do
+  gem "web-console", "~> 2.0"
+  gem "spring"
+  gem "byebug"
+  gem "letter_opener"
+  gem "faker", "1.4.2"
+  gem "rspec-rails", "~> 3.0"
+end

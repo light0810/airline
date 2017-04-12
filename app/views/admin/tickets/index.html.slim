@@ -1,0 +1,55 @@
+h2 = t "admin.ticket.index_ticket"
+
+table.table.table-bordered.text-center
+  tr
+    th.info.text-center = sort_link @search, :location, t("admin.ticket.location")
+    th.info.text-center = sort_link @search, :level, t("admin.ticket.level")
+    th.info.text-center = sort_link @search, :status, t("admin.ticket.price")
+    th.info.text-center = sort_link @search, :status, t("admin.ticket.status")
+    th.info.text-center = sort_link @search, :flight_code, t("admin.ticket.flight")
+    th.info.text-center = sort_link @search, :plane_code, t("admin.ticket.plane")
+    th.info.text-center = sort_link @search, :user_name, t("admin.ticket.user")
+    th.info.text-center = t "admin.ticket.select"
+
+  - @tickets.each do |ticket|
+    tr
+      td = ticket.location
+      td
+        - if ticket.type1?
+          | Hạng 1
+        - elsif ticket.type2?
+          | Hạng 2
+        - elsif ticket.type3?
+          | Hạng 3
+        - elsif ticket.other?
+          | Hạng khác
+      td = ticket.price
+      td
+        - if ticket.block?
+          | Đã khóa
+        - elsif ticket.sale?
+          | Chưa sở hữu
+        - elsif ticket.own?
+          | Đã sở hữu
+      td = ticket.flight.code
+      td = ticket.plane.code
+      td
+        - unless ticket.user.nil?
+          = ticket.user.name        
+      td
+        = link_to t("button.edit"), edit_admin_ticket_path(ticket) , class: "btn btn-primary btn-xs"
+        | &nbsp;&nbsp;
+        = link_to t("button.delete"), [:admin, ticket], method: :delete,
+          data: {confirm: t("button.you_sure")}, class: "btn btn-primary btn-xs"
+
+h5
+  | Số lượng vé đang khoá: 
+  = @block_tickets.count
+h5
+  | Số lượng vé chưa bán: 
+  = @sale_tickets.count
+h5
+  | Số lượng vé đã sở hữu: 
+  = @own_tickets.count
+
+= paginate @tickets

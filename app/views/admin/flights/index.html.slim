@@ -1,0 +1,53 @@
+h2 = t "admin.flight.index_flight"
+
+table.table.table-bordered.text-center
+  tr
+    th.info.text-center = sort_link @search, :code, t("admin.flight.code")
+    th.info.text-center = sort_link @search, :plane_code, t("admin.flight.plane")
+    th.info.text-center = sort_link @search, :start_time, t("admin.flight.start_time")
+    th.info.text-center = sort_link @search, :end_time, t("admin.flight.end_time")
+    th.info.text-center = sort_link @search, :start_place_city, t("admin.flight.start_place")
+    th.info.text-center = sort_link @search, :end_place_city, t("admin.flight.end_place")
+    th.info.text-center = sort_link @search, :cooldown_date, t("admin.flight.cooldown_date")
+    th.info.text-center = sort_link @search, :status, t("admin.flight.status")
+    th.info.text-center = t "admin.flight.select"
+
+  - @flights.each do |flight|
+    tr
+      td = flight.code
+      td = flight.plane.code
+      td
+        - unless flight.start_time.nil?
+          = flight.start_time.strftime("%d/%m/%y")
+      td
+        - unless flight.end_time.nil?
+          = flight.end_time.strftime("%d/%m/%y")
+      td
+        = flight.start_place.city
+        | , 
+        = flight.start_place.country
+      td 
+        = flight.end_place.city
+        | , 
+        = flight.end_place.country
+      td = flight.cooldown_date
+      td
+        - if flight.not_confirm?
+          = link_to "Chưa phê duyệt", admin_manage_flight_path(id: flight.id, status: "confirm"), method: :patch, data: {confirm: "Phê duyệt chuyến bay này và Phát hành vé?"}, class: "btn btn-danger btn-xs"
+        - elsif flight.confirm?
+          = link_to "Phê duyệt", admin_manage_flight_path(id: flight.id, status: "arrive"), method: :patch, data: {confirm: "Khởi hành chuyến bay này?"}, class: "btn btn-primary btn-xs"
+        - elsif flight.arrive?
+          = link_to "Đã khởi hành", admin_manage_flight_path(id: flight.id, status: "delay"), method: :patch, data: {confirm: "Hoãn chuyến bay này?"}, class: "btn btn-success btn-xs"
+        - elsif flight.delay?
+          = link_to "Trì hoãn", admin_manage_flight_path(id: flight.id, status: "arrive"), method: :patch, data: {confirm: "Khởi hành lại chuyến bay này?"}, class: "btn btn-danger btn-xs"
+      td
+        = link_to t("button.show"), [:admin, flight] , class: "btn btn-primary btn-xs"
+        | &nbsp;&nbsp;
+        = link_to t("button.edit"), edit_admin_flight_path(flight) , class: "btn btn-primary btn-xs"
+        | &nbsp;&nbsp;
+        = link_to t("button.delete"), [:admin, flight], method: :delete,
+          data: {confirm: t("button.you_sure")}, class: "btn btn-primary btn-xs"
+
+h4 = link_to t("admin.flight.new_flight"), new_admin_flight_path
+
+= paginate @flights

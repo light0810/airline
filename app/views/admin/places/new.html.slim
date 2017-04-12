@@ -1,0 +1,21 @@
+#form-box
+  h2 = t "admin.place.new_place"
+  hr
+  = form_for [:admin, @place] do |f|
+    = render "shared/error_message", object: f.object
+    .form-group.row
+      .col-xs-6
+        = f.label :city
+      .col-xs-6
+        = f.text_field :city, class: "form-control"
+
+    .form-group.row
+      .col-xs-6
+        = f.label :country
+      .col-xs-6
+        = f.text_field :country, class: "form-control"
+
+    .form-group.row
+      .col-xs-4
+      .col-xs-4
+        = f.submit t("button.create"), class: "btn btn-primary btn-block"

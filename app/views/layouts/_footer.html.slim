@@ -1,0 +1,43 @@
+#footer.container-fluid
+  #feature.row
+    .col-md-2
+      h5 = t "footer.schedule"
+      li = link_to t("footer.info_schedule"), schedules_path
+      li = link_to t("footer.info_plane"), "#"
+    .col-md-2
+      h5 = t "footer.buy_ticket"
+      li = link_to t("footer.buy_ticket"), flights_path
+      li = link_to t("footer.change_ticket"), tickets_path
+      li = link_to t("footer.cancel_ticket"), carts_path
+    .col-md-2
+      h5 = t "footer.proceduce"
+      li = link_to t("footer.document"), "#"
+      li = link_to t("footer.online_procedure"), "#"
+      li = link_to t("footer.airport_procedure"), "#"
+      li = link_to t("footer.info_baggage"), "#"
+    .col-md-2
+      h5 = t "footer.customer_package"
+      li = link_to t("footer.business_class"), "#"
+      li = link_to t("footer.economy_class"), "#"
+      li = link_to t("footer.special_class"), "#"
+    .col-md-2
+      h5 = t "footer.promotion"
+      li = link_to t("footer.promotion"), promotion_path
+    .col-md-2
+      h5 = t "footer.introduce"
+      li = link_to t("footer.info"), info_path
+      li = link_to t("footer.member"), member_path
+      li = link_to t("footer.contact"), contact_path
+  #info.row
+    .col-md-2
+      h6 = t "footer.banner"
+    .col-md-1.col-md-offset-7
+      h6 = link_to t("footer.map"), "#"
+    .col-md-1
+      h6 = link_to t("footer.contact"), "#"
+    .col-md-1
+      h6 = link_to t("footer.security"), "#"
+  #address.row
+    p Công ty Hàng không Việt Nam. Số 200 Nguyễn Sơn, P.Bồ Đề, Q.Long Biên, Hà Nội. Điện thoại: 0969280192
+    p Giấy chứng nhận ĐKKD/Quyết định thành lập số 952/QĐ-TTg ngày 23/6/2010 của Thủ tướng Chính phủ; 
+    p Mã số doanh nghiệp: 0000000000, đăng ký lần đầu ngày 30/6/2010, cấp bởi Sở KHĐT thành phố Hà Nội.

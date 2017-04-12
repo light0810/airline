@@ -1,0 +1,48 @@
+h3.text-danger Thông tin chuyến bay
+h4
+  strong Mã chuyến bay: 
+  = @flight.code
+h4
+  strong Thời gian đi: 
+  = @flight.start_time
+  | &nbsp; &nbsp; &nbsp; &nbsp;
+  strong Thời gian đến: 
+  = @flight.end_time
+h4
+  strong Địa điểm đi: 
+  = @flight.start_place.city
+  | , 
+  = @flight.start_place.country
+  | &nbsp; &nbsp; &nbsp; &nbsp;
+  strong Địa điểm đến: 
+  = @flight.end_place.city
+  | , 
+  = @flight.end_place.country
+hr
+- if @flight.confirm?
+  = form_tag @object, url: buy_many_tickets_path, method: 'POST'
+    .form-group.row
+      .col-xs-6
+        = label_tag 'Số vé hạng 1'
+      .col-xs-2
+        = number_field_tag 'number_ticket_1', 0, in: 0...4, class: "form-control"
+    .form-group.row
+      .col-xs-6
+        = label_tag 'Số vé hạng 2'
+      .col-xs-2
+        = number_field_tag 'number_ticket_2', 0, in: 0...4, class: "form-control"
+    .form-group.row
+      .col-xs-6
+        = label_tag 'Số vé hạng 3'
+      .col-xs-2
+        = number_field_tag 'number_ticket_3', 0, in: 0...4, class: "form-control"
+    .form-group.row
+      .col-xs-6
+        = label_tag 'Số vé hạng khác'
+      .col-xs-2
+        = number_field_tag 'number_ticket_other', 0, in: 0...4, class: "form-control"
+
+    = hidden_field_tag 'flight_id', @flight.id
+
+    = submit_tag "Đặt vé", class: "btn btn-primary"
+hr

@@ -1,0 +1,28 @@
+doctype html
+
+html
+  head
+    title = full_title yield :title
+    = favicon_link_tag
+    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
+    = javascript_include_tag "application", "data-turbolinks-track" => true
+    = csrf_meta_tags
+  body
+    - unless user_signed_in? && current_user.admin?
+      = render "layouts/header"
+      .container-fluid.body_wrapper
+        - flash.each do |message_type, message|
+          div class="alert #{bootstrap_class_for(message_type)}" 
+            = message
+            a href="#" class="close" data-dismiss="alert" aria-label="close" &times;
+        = yield
+      = render "layouts/footer"
+    - else
+      = render "layouts/admin_header"
+      .admin_body_wrapper.row
+        .col-md-2.admin-menu
+          = render "layouts/admin_menu"
+        .col-md-10.admin-content
+          - flash.each do |message_type, message|
+            div class="alert #{bootstrap_class_for(message_type)}" = message
+          = yield

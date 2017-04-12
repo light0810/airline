@@ -1,0 +1,73 @@
+.row
+  .col-xs-2#info_user
+    = image_tag(current_user.image, height: "120px", width: "120px", class: "img-circle")
+    h5.text-info
+      - if current_user.general?
+        | Hạng phổ thông
+      - elsif current_user.special?
+        | Hạng đặc biệt
+      - elsif current_user.business?
+        | Hạng doanh nhân
+    h2 = current_user.name
+  .col-xs-10#paycart
+    - if @carts.count == 0
+      h3.text-danger Chưa có hóa đơn nào
+    - else
+      h3.text-info style="padding-left:10px;" Hóa đơn của bạn
+      - @carts.each do |cart|
+        #paycart_item
+          - if cart.status == "Completed"
+            h4.text-success
+              | Hóa đơn số 
+              = cart.id
+            - cart.tickets.each do |ticket|
+              p
+                strong Vị trí vé: 
+                = ticket.location
+                | &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                strong Giá vé: 
+                = ticket.price
+                | $&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                strong Hạng vé: 
+                - if ticket.type1?
+                  | Hạng 1
+                - elsif ticket.type2?
+                  | Hạng 2
+                - elsif ticket.type3?
+                  | Hạng 3
+                - elsif ticket.other?
+                  | Hạng khác 
+            h5.text-success style="text-align:right;" Đã thanh toán
+          - else
+            h4.text-danger
+              | Hóa đơn số 
+              = cart.id
+            - cart.tickets.each do |ticket|
+              p
+                strong Vị trí vé: 
+                = ticket.location
+                | &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                strong Giá vé: 
+                = ticket.price
+                | $&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                strong Hạng vé: 
+                - if ticket.type1?
+                  | Hạng 1
+                - elsif ticket.type2?
+                  | Hạng 2
+                - elsif ticket.type3?
+                  | Hạng 3
+                - elsif ticket.other?
+                  | Hạng khác
+                | &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                strong Mã máy bay: 
+                = ticket.plane.code
+                | &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                strong Mã chuyến bay: 
+                = ticket.flight.code
+                | &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                strong Mã vé: 
+                = ticket.id
+                | &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                = link_to "Hủy vé", ticket_path(ticket), method: :patch, data: {confirm: "Bạn có chắc chắn hủy vé?"}
+            h5 style="text-align:right;" = link_to "Thanh toán", cart.paypal_url(carts_url)

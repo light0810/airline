@@ -1,0 +1,60 @@
+h3 Thông tin chuyến bay
+h4
+  strong Mã chuyến bay: 
+  = @flight.code
+h4
+  strong Thời gian đi: 
+  = @flight.start_time
+  | &nbsp; &nbsp; &nbsp; &nbsp;
+  strong Thời gian đến: 
+  = @flight.end_time
+h4
+  strong Địa điểm đi: 
+  = @flight.start_place.city
+  | , 
+  = @flight.start_place.country
+  | &nbsp; &nbsp; &nbsp; &nbsp;
+  strong Địa điểm đến: 
+  = @flight.end_place.city
+  | , 
+  = @flight.end_place.country
+hr
+
+- if @flight.confirm?
+  h3 Thông tin vé cần đổi
+  h4
+    strong Giá vé: 
+    = @ticket.price
+    | $
+  h4 
+    strong Hạng vé: 
+    - if @ticket.type1?
+      | Vé hạng 1
+    - elsif  @ticket.type2?
+      | Vé hạng 2
+    - elsif  @ticket.type3?
+      | Vé hạng 3
+    - elsif  @ticket.other?
+      | Vé hạng khác
+  h4
+    strong Vị trí vé: 
+    = @ticket.location
+  hr
+  h3 Danh sách vé cùng hạng
+  .row
+    - @type_tickets.each do |type_ticket|
+      .col-xs-1
+        = type_ticket.location
+        - if type_ticket.block?
+          button.btn.btn-danger.btn-block Đã khóa
+        - elsif type_ticket.sale?
+          = link_to "Đổi", swap_ticket_path(id: @ticket.id, swap_ticket_id: type_ticket.id), method: :patch, class: "btn btn-primary btn-block", data: {confirm: "Bạn có chắc đổi vé này?"}
+        - elsif type_ticket.own?
+          button.btn.btn-success.btn-block Đã đặt
+
+- elsif @flight.arrive?
+  h3 Chuyến bay đã khởi hành
+- elsif @flight.delay?
+  h3 Chuyến bay bị hoãn
+- elsif @flight.not_confirm?
+  h3 Vé chưa được phát hành
